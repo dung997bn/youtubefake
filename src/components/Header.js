@@ -12,7 +12,7 @@ export default function Header() {
         marginTop: Constants.statusBarHeight,
         flexDirection: "row",
         justifyContent: "space-between",
-        elevation: 3
+        elevation: 3,
       }}
     >
       <View style={{ flexDirection: "row", margin: 5 }}>
@@ -27,7 +27,7 @@ export default function Header() {
             fontSize: 22,
             marginLeft: 5,
             fontWeight: "bold",
-            color: { mycolor },
+            color: "#212121",
           }}
         >
           YouTube
