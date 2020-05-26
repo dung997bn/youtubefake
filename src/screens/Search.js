@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { MiniCard } from "../components/MiniCard";
 import Constants from "expo-constants";
+import { useNavigation } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
 
 //curl \
 // 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=firebase&type=video&key=AIzaSyA4UzGOIVzIUQNGNT0vcA_GApRwM1rtcmw' \
@@ -18,10 +20,16 @@ import Constants from "expo-constants";
 // --header 'Accept: application/json' \
 // --compressed
 
-const Search = () => {
+const Search = ({ mavigation }) => {
   const [value, setValue] = useState("");
-  const [miniCardData, setMiniCardData] = useState([]);
+  const miniCardData = useSelector((state) => {
+    return state;
+  });
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+
+  const navigation = useNavigation();
+
   const fetchData = () => {
     setLoading(true);
     fetch(
@@ -30,7 +38,7 @@ const Search = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        setMiniCardData(data.items);
+        dispatch({ type: "add", payload: data.items });
       });
   };
 
@@ -45,7 +53,13 @@ const Search = () => {
           marginTop: Constants.statusBarHeight,
         }}
       >
-        <Ionicons name="md-arrow-back" size={32} />
+        <Ionicons
+          name="md-arrow-back"
+          size={32}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
         <TextInput
           value={value}
           style={{ width: "70%", backgroundColor: "#e6e6e6" }}
@@ -60,7 +74,7 @@ const Search = () => {
       <FlatList
         data={miniCardData}
         renderItem={(item) => {
-          return <MiniCard data={item.item} />;
+          return <MiniCard data={item} />;
         }}
         keyExtractor={(item) => item.id.videoId}
       />
