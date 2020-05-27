@@ -2,15 +2,22 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
 export default function Header() {
-  const mycolor = "#212121";
   const navigation = useNavigation();
+  const { colors } = useTheme();
+  const mycolor = colors.iconColor;
+
+  const dispatch = useDispatch();
+  const currentDarkMode = useSelector((state) => {
+    return state.darkMode;
+  });
   return (
     <View
       style={{
         height: 45,
-        backgroundColor: "white",
+        backgroundColor: colors.headerColor,
         marginTop: Constants.statusBarHeight,
         flexDirection: "row",
         justifyContent: "space-between",
@@ -49,10 +56,17 @@ export default function Header() {
           size={32}
           color={mycolor}
           onPress={() => {
-            navigation.navigate('search');
+            navigation.navigate("search");
           }}
         />
-        <MaterialIcons name="account-circle" size={32} color={mycolor} />
+        <MaterialIcons
+          name="account-circle"
+          size={32}
+          color={mycolor}
+          onPress={() => {
+            dispatch({ type: "change_theme", payload: !currentDarkMode });
+          }}
+        />
       </View>
     </View>
   );

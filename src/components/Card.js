@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 
 const Card = ({ data }) => {
   const navigation = useNavigation();
+  const { colors } = useTheme();
+  const textColor = colors.iconColor;
   return (
     <TouchableOpacity
       onPress={() =>
@@ -45,11 +47,14 @@ const Card = ({ data }) => {
               style={{
                 fontSize: 20,
                 width: Dimensions.get("screen").width - 30,
+                color: textColor,
               }}
             >
               {data.snippet.title}
             </Text>
-            <Text>{data.snippet.channelTitle} </Text>
+            <Text style={{ color: textColor }}>
+              {data.snippet.channelTitle}
+            </Text>
           </View>
         </View>
       </View>

@@ -8,9 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 export const MiniCard = ({ data }) => {
   const navigation = useNavigation();
+  const { colors } = useTheme();
+  const textColor = colors.iconColor;
   return (
     <TouchableOpacity
       onPress={() =>
@@ -34,11 +36,15 @@ export const MiniCard = ({ data }) => {
           <Text
             ellipsizeMode="tail"
             numberOfLines={2}
-            style={{ fontSize: 18, width: Dimensions.get("screen").width / 2 }}
+            style={{
+              fontSize: 18,
+              width: Dimensions.get("screen").width / 2,
+              color: textColor,
+            }}
           >
             {data.item.snippet.title}
           </Text>
-          <Text style={{ fontSize: 12 }}>
+          <Text style={{ fontSize: 12, color: textColor }}>
             {data.item.snippet.channelTitle}{" "}
           </Text>
         </View>

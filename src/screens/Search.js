@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { MiniCard } from "../components/MiniCard";
 import Constants from "expo-constants";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 
 //curl \
@@ -23,7 +23,7 @@ import { useSelector, useDispatch } from "react-redux";
 const Search = ({ mavigation }) => {
   const [value, setValue] = useState("");
   const miniCardData = useSelector((state) => {
-    return state;
+    return state.cardData;
   });
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -42,6 +42,8 @@ const Search = ({ mavigation }) => {
       });
   };
 
+  const { colors } = useTheme();
+
   return (
     <View style={{ flex: 1 }}>
       <View
@@ -59,13 +61,19 @@ const Search = ({ mavigation }) => {
           onPress={() => {
             navigation.goBack();
           }}
+          color={colors.iconColor}
         />
         <TextInput
           value={value}
           style={{ width: "70%", backgroundColor: "#e6e6e6" }}
           onChangeText={(text) => setValue(text)}
         />
-        <Ionicons name="md-send" size={32} onPress={() => fetchData()} />
+        <Ionicons
+          name="md-send"
+          size={32}
+          onPress={() => fetchData()}
+          color={colors.iconColor}
+        />
       </View>
       {loading && (
         <ActivityIndicator size="large" style={{ marginTop: 10 }} color="red" />
