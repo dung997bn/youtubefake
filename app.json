@@ -27,6 +27,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "First learning RN",
+    "githubUrl": "https://github.com/dung997bn/youtubefake.git"
   }
 }
